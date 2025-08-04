@@ -10,7 +10,7 @@ function ProfilePage() {
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({ username: '', phone: '' });
+  const [formData, setFormData] = useState({ name: '', phone: '' });
 
   useEffect(() => {
     if (user) {
@@ -25,7 +25,7 @@ function ProfilePage() {
       const profileData = await DatabaseService.getProfile(user.id);
       if (profileData) {
         setProfile(profileData);
-        setFormData({ username: profileData.username || '', phone: profileData.phone || '' });
+        setFormData({ name: profileData.name || '', phone: profileData.phone || '' });
       }
     } catch (error) {
       toast.error('프로필 정보를 불러오는 데 실패했습니다.');
@@ -69,12 +69,12 @@ function ProfilePage() {
         {isEditing ? (
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">이름</label>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">이름</label>
               <Input
-                id="username"
-                name="username"
+                id="name"
+                name="name"
                 type="text"
-                value={formData.username}
+                value={formData.name}
                 onChange={handleInputChange}
                 className="w-full"
               />

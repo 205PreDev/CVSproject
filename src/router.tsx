@@ -11,7 +11,7 @@ import { CartPage } from './pages/customer/CartPage';
 import { OrderSuccessPage } from './pages/customer/OrderSuccessPage';
 import { OrderFailPage } from './pages/customer/OrderFailPage';
 import { OrdersPage } from './pages/customer/OrdersPage';
-import { ProfilePage } from './pages/customer/ProfilePage';
+import ProfilePage from './pages/customer/ProfilePage';
 
 // Components
 import { ProtectedRoute } from './components/auth';
