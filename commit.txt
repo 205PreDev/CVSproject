@@ -1,1 +1,1 @@
-feat: Initial project setup
+feat: Display user profile information

@@ -11,6 +11,7 @@ import { CartPage } from './pages/customer/CartPage';
 import { OrderSuccessPage } from './pages/customer/OrderSuccessPage';
 import { OrderFailPage } from './pages/customer/OrderFailPage';
 import { OrdersPage } from './pages/customer/OrdersPage';
+import { ProfilePage } from './pages/customer/ProfilePage';
 
 // Components
 import { ProtectedRoute } from './components/auth';
@@ -45,6 +46,7 @@ function Router() {
               <Route path="/order-success" element={<OrderSuccessPage />} />
               <Route path="/order-fail" element={<OrderFailPage />} />
               <Route path="/orders" element={<OrdersPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
               <Route index element={<Navigate to="/customer/stores" replace />} />
             </Routes>
           </ProtectedRoute>
