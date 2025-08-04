@@ -193,6 +193,41 @@ export class DatabaseService {
 
     return data;
   }
+
+  /**
+   * 사용자 프로필 조회
+   */
+  static async getProfile(userId: string): Promise<any | null> {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', userId)
+      .single();
+
+    if (error && error.code !== 'PGRST116') {
+      throw new Error(`Failed to fetch profile: ${error.message}`);
+    }
+
+    return data;
+  }
+
+  /**
+   * 사용자 프로필 업데이트
+   */
+  static async updateProfile(userId: string, updates: any): Promise<any> {
+    const { data, error } = await supabase
+      .from('profiles')
+      .update(updates)
+      .eq('id', userId)
+      .select()
+      .single();
+
+    if (error) {
+      throw new Error(`Failed to update profile: ${error.message}`);
+    }
+
+    return data;
+  }
 }
 
 export default DatabaseService;
