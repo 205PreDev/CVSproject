@@ -13,6 +13,14 @@ import { OrderFailPage } from './pages/customer/OrderFailPage';
 import { OrdersPage } from './pages/customer/OrdersPage';
 import ProfilePage from './pages/customer/ProfilePage';
 
+// Owner Pages
+import OwnerDashboardPage from './pages/owner/OwnerDashboardPage';
+import OrderManagementPage from './pages/owner/OrderManagementPage';
+import ProductInventoryManagementPage from './pages/owner/ProductInventoryManagementPage';
+import PurchaseRequestManagementPage from './pages/owner/PurchaseRequestManagementPage';
+import SalesAnalysisPage from './pages/owner/SalesAnalysisPage';
+import CouponManagementPage from './pages/owner/CouponManagementPage';
+
 // Components
 import { ProtectedRoute } from './components/auth';
 
@@ -57,10 +65,14 @@ function Router() {
         path="/owner/*"
         element={
           <ProtectedRoute allowedRoles={['owner']}>
-            <div className="p-8">
-              <h1 className="text-2xl font-bold">점주 대시보드</h1>
-              <p>점주용 페이지가 여기에 표시됩니다.</p>
-            </div>
+            <Routes>
+              <Route index element={<OwnerDashboardPage />} />
+              <Route path="/orders" element={<OrderManagementPage />} />
+              <Route path="/products" element={<ProductInventoryManagementPage />} />
+              <Route path="/purchase-requests" element={<PurchaseRequestManagementPage />} />
+              <Route path="/analytics" element={<SalesAnalysisPage />} />
+              <Route path="/coupons" element={<CouponManagementPage />} />
+            </Routes>
           </ProtectedRoute>
         }
       />
