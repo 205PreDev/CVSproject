@@ -24,6 +24,13 @@ import CouponManagementPage from './pages/owner/CouponManagementPage';
 // Components
 import { ProtectedRoute } from './components/auth';
 
+// Admin Pages
+import AdminDashboardPage from './pages/admin/AdminDashboardPage';
+import UserManagementPage from './pages/admin/UserManagementPage';
+import StoreManagementPage from './pages/admin/StoreManagementPage';
+import NoticeManagementPage from './pages/admin/NoticeManagementPage';
+import SystemSettingsPage from './pages/admin/SystemSettingsPage';
+
 function Router() {
   const { user, isLoading } = useAuth();
 
@@ -81,10 +88,13 @@ function Router() {
         path="/admin/*"
         element={
           <ProtectedRoute allowedRoles={['admin']}>
-            <div className="p-8">
-              <h1 className="text-2xl font-bold">관리자 대시보드</h1>
-              <p>관리자용 페이지가 여기에 표시됩니다.</p>
-            </div>
+            <Routes>
+              <Route index element={<AdminDashboardPage />} />
+              <Route path="/users" element={<UserManagementPage />} />
+              <Route path="/stores" element={<StoreManagementPage />} />
+              <Route path="/notices" element={<NoticeManagementPage />} />
+              <Route path="/settings" element={<SystemSettingsPage />} />
+            </Routes>
           </ProtectedRoute>
         }
       />

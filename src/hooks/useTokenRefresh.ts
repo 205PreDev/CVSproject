@@ -26,14 +26,14 @@ export const useTokenRefresh = (options: UseTokenRefreshOptions = {}) => {
 
     try {
       // 토큰이 만료되었는지 확인
-      if (AuthService.isTokenExpired(token)) {
+      if (await AuthService.isTokenExpired(token)) {
         console.warn('Token expired, logging out')
         logout()
         return
       }
 
       // 토큰 만료 임박 확인
-      const decoded = AuthService.verifyToken(token)
+      const decoded = await AuthService.verifyToken(token)
       if (decoded) {
         // 현재 사용자 정보 새로고침
         await refreshUser()
@@ -91,6 +91,6 @@ export const useTokenRefresh = (options: UseTokenRefreshOptions = {}) => {
 
   return {
     checkTokenStatus,
-    isTokenValid: user ? AuthService.isValidToken(AuthService.getStoredToken() || '') : false
+    isTokenValid: async () => user ? await AuthService.isValidToken(AuthService.getStoredToken() || '') : false
   }
 }

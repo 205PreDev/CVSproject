@@ -1,10 +1,9 @@
 import { supabase } from './supabase'
 import * as jose from 'jose'
-import bcrypt from 'bcryptjs/dist/bcrypt'
+import * as bcrypt from 'bcryptjs'
 
 // JWT 시크릿 키 (실제 운영에서는 환경 변수로 관리)
 const JWT_SECRET = import.meta.env.VITE_JWT_SECRET || 'your-secret-key-change-in-production'
-const TOKEN_EXPIRY = '24h'
 const TOKEN_STORAGE_KEY = 'auth_token'
 
 export interface User {
@@ -383,10 +382,22 @@ export class AuthService {
   static async invalidateAllTokens(userId: string): Promise<boolean> {
     try {
       // 사용자의 token_version을 1 증가시켜 기존 토큰들을 무효화
+      // 먼저 현재 token_version을 가져옵니다
+      const { data: currentUser } = await supabase
+        .from('users')
+        .select('token_version')
+        .eq('id', userId)
+        .single()
+
+      if (!currentUser) {
+        console.error('User not found for token invalidation')
+        return false
+      }
+
       const { error } = await supabase
         .from('users')
         .update({ 
-          token_version: supabase.raw('token_version + 1'),
+          token_version: currentUser.token_version + 1,
           updated_at: new Date().toISOString()
         })
         .eq('id', userId)
@@ -475,12 +486,23 @@ export class AuthService {
       // 새 비밀번호 해시화
       const newPasswordHash = await bcrypt.hash(newPassword, 10)
 
+      // 먼저 현재 token_version을 가져옵니다
+      const { data: currentUser } = await supabase
+        .from('users')
+        .select('token_version')
+        .eq('id', userId)
+        .single()
+
+      if (!currentUser) {
+        throw new Error('사용자를 찾을 수 없습니다.')
+      }
+
       // 비밀번호 변경과 동시에 토큰 버전 증가
       const { error: updateError } = await supabase
         .from('users')
         .update({ 
           password_hash: newPasswordHash,
-          token_version: supabase.raw('token_version + 1'),
+          token_version: currentUser.token_version + 1,
           updated_at: new Date().toISOString()
         })
         .eq('id', userId)

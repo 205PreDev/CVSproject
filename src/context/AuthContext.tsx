@@ -5,8 +5,8 @@ interface AuthContextType {
   user: User | null
   isLoading: boolean
   isAuthenticated: boolean
-  login: (credentials: LoginCredentials) => Promise<void>
-  register: (userData: RegisterData) => Promise<void>
+  login: (credentials: LoginCredentials) => Promise<AuthResponse>,
+  register: (userData: RegisterData) => Promise<AuthResponse>
   logout: () => void
   refreshUser: () => Promise<void>
 }

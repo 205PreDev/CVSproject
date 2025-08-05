@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../../components/common/Layout';
-import DatabaseService from '../../services/database';
+import { DatabaseService } from '../../services/database';
 import { useAuth } from '../../context/AuthContext';
 import { Card, Button, Input, Modal } from '../../components/ui';
 

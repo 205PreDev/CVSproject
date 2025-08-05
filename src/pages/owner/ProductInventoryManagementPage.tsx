@@ -6,6 +6,7 @@ import { Card, Button, Input, Modal } from '../../components/ui';
 
 interface Product {
   id: string;
+  id: string;
   name: string;
   description: string;
   category: string;
@@ -157,7 +158,7 @@ const ProductInventoryManagementPage: React.FC = () => {
       try {
         await DatabaseService.delete('inventory', inventoryId);
         await DatabaseService.delete('products', productId);
-        const updatedInventory = await DatabaseService.getProductsByStore(storeId);
+        const updatedInventory = await DatabaseService.getProductsByStore(storeId!);
         setInventory(updatedInventory);
       } catch (err) {
         console.error('Failed to delete product/inventory:', err);

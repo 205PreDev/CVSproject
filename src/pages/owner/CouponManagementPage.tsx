@@ -77,7 +77,7 @@ const CouponManagementPage: React.FC = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type, checked } = e.target as HTMLInputElement;
     setCurrentCoupon(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value,

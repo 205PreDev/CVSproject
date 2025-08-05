@@ -39,9 +39,9 @@ export const useAuthForm = (options: UseAuthFormOptions = {}) => {
       setIsSubmitting(true)
       setError(null)
       
-      await register(userData)
+      const response: AuthResponse = await register(userData)
       
-      onSuccess?.()
+      onSuccess?.(response)
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : '회원가입에 실패했습니다.'
       setError(errorMessage)
